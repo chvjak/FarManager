@@ -236,9 +236,6 @@
     <ClCompile Include="hook_wow64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hotplug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="imports.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -372,9 +369,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="preservestyle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="print.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="processname.cpp">
@@ -820,9 +814,6 @@
     <ClInclude Include="hmenu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hotplug.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="imports.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -977,9 +968,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="preservestyle.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="print.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="processname.hpp">
