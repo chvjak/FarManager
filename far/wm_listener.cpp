@@ -158,8 +158,12 @@ void wm_listener::Check()
 
 void wm_listener::WindowThreadRoutine(const os::event* ReadyEvent)
 {
+	ReadyEvent->set();
+
+	return;
+
 	// TODO: SEH guard, try/catch, exception_ptr
-	WNDCLASSEX wc={sizeof(wc)};
+	WNDCLASSEX wc = { sizeof(wc) };
 	wc.lpfnWndProc = WndProc;
 	wc.lpszClassName = L"FarHiddenWindowClass";
 	UnregisterClass(wc.lpszClassName, nullptr);
@@ -169,17 +173,17 @@ void wm_listener::WindowThreadRoutine(const os::event* ReadyEvent)
 	SCOPE_EXIT{ UnregisterClass(wc.lpszClassName, nullptr); };
 
 	m_Hwnd = CreateWindowEx(0, wc.lpszClassName, nullptr, 0, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, nullptr, nullptr, nullptr, nullptr);
-	ReadyEvent->set();
+
 	if (!m_Hwnd)
 		return;
 
 	// for PBT_POWERSETTINGCHANGE
-	const auto hpn = imports.RegisterPowerSettingNotification(m_Hwnd,&GUID_BATTERY_PERCENTAGE_REMAINING,DEVICE_NOTIFY_WINDOW_HANDLE);
+	const auto hpn = imports.RegisterPowerSettingNotification(m_Hwnd, &GUID_BATTERY_PERCENTAGE_REMAINING, DEVICE_NOTIFY_WINDOW_HANDLE);
 	SCOPE_EXIT{ if (hpn) imports.UnregisterPowerSettingNotification(hpn); };
 
 	MSG Msg;
 	WndProcExceptionPtr = &m_ExceptionPtr;
-	while(!m_exitEvent.is_signaled() && !m_ExceptionPtr && GetMessage(&Msg, nullptr, 0, 0) > 0)
+	while (!m_exitEvent.is_signaled() && !m_ExceptionPtr && GetMessage(&Msg, nullptr, 0, 0) > 0)
 	{
 		TranslateMessage(&Msg);
 		DispatchMessage(&Msg);
