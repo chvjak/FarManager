@@ -5,8 +5,7 @@
 This project is an attempt to make Far Manager running on Windows Nano Server. Far's file manipulation, browsing and text editing 
 functions make it very useful tool for scenarios like troubleshooting Nano Server based docker containers.
 
-# How-to
-If you wish to give it a try
+[Download FarNano](https://github.com/chvjak/FarManager/raw/master/FarNano.zip)
 
 
 ### Far Manager
