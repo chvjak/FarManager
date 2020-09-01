@@ -63,7 +63,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "clipboard.hpp"
 #include "delete.hpp"
 #include "stddlg.hpp"
-#include "print.hpp"
 #include "mkdir.hpp"
 #include "setattr.hpp"
 #include "filetype.hpp"
@@ -2111,9 +2110,6 @@ bool FileList::ProcessKey(const Manager::Key& Key)
 		case KEY_ALTF5:  // Печать текущего/выбранных файла/ов
 		case KEY_RALTF5:
 		{
-			if (!m_ListData.empty() && SetCurPath())
-				PrintFiles(this);
-
 			return true;
 		}
 
