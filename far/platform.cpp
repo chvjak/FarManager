@@ -107,10 +107,6 @@ namespace os
 			CloseHandle(Handle);
 		}
 
-		void printer_handle_closer::operator()(HANDLE Handle) const noexcept
-		{
-			ClosePrinter(Handle);
-		}
 	}
 
 
@@ -287,17 +283,6 @@ DWORD GetAppPathsRedirectionFlag()
 	return RedirectionFlag;
 }
 
-bool GetDefaultPrinter(string& Printer)
-{
-	return detail::ApiDynamicStringReceiver(Printer, [&](span<wchar_t> Buffer)
-	{
-		auto Size = static_cast<DWORD>(Buffer.size());
-		if (::GetDefaultPrinter(Buffer.data(), &Size))
-			return Size - 1;
-
-		return GetLastError() == ERROR_INSUFFICIENT_BUFFER? Size : 0;
-	});
-}
 
 bool GetComputerName(string& Name)
 {

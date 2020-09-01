@@ -51,7 +51,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "keys.hpp"
 #include "stddlg.hpp"
 #include "eject.hpp"
-#include "hotplug.hpp"
 #include "setattr.hpp"
 #include "panel.hpp"
 #include "filepanels.hpp"
@@ -598,48 +597,6 @@ static bool DisconnectDrive(panel_ptr Owner, const disk_item& item, VMenu2 &ChDi
 	}
 }
 
-static void RemoveHotplugDevice(panel_ptr Owner, const disk_item& item, VMenu2 &ChDisk)
-{
-	bool Cancelled = false;
-	if (RemoveHotplugDisk(item.cDrive, Global->Opt->Confirm.RemoveHotPlug, Cancelled) || Cancelled)
-		return;
-
-
-	// запоминаем состояние панелей
-	const auto CMode = Owner->GetMode();
-	const auto AMode = Owner->Parent()->GetAnotherPanel(Owner)->GetMode();
-	const auto TmpCDir = Owner->GetCurDir();
-	const auto TmpADir = Owner->Parent()->GetAnotherPanel(Owner)->GetCurDir();
-
-	// "цикл до умопомрачения"
-	for (;;)
-	{
-		// "освободим диск" - перейдем при необходимости в домашний каталог
-		// TODO: А если домашний каталог - USB? ;-)
-		Owner->IfGoHome(item.cDrive);
-		// очередная попытка извлечения без вывода сообщения
-		if (RemoveHotplugDisk(item.cDrive, false, Cancelled) || Cancelled)
-			return;
-
-		const auto ErrorState = error_state::fetch();
-
-		// восстановим пути - это избавит нас от левых данных в панели.
-		if (AMode != panel_mode::PLUGIN_PANEL)
-			Owner->Parent()->GetAnotherPanel(Owner)->SetCurDir(TmpADir, false);
-
-		if (CMode != panel_mode::PLUGIN_PANEL)
-			Owner->SetCurDir(TmpCDir, false);
-
-		if (Message(MSG_WARNING, ErrorState,
-			msg(lng::MError),
-			{
-				format(msg(lng::MChangeCouldNotEjectHotPlugMedia), item.cDrive)
-			},
-			{ lng::MHRetry, lng::MHCancel },
-			{}, &EjectHotPlugMediaErrorId) != Message::first_button)
-			return;
-	}
-}
 
 static bool GetShellName(const string& Path, string& Name)
 {
@@ -1095,7 +1052,6 @@ static int ChangeDiskMenu(panel_ptr Owner, int Pos, bool FirstCall)
 
 				std::visit(overload{[&](disk_item const& item)
 				{
-					RemoveHotplugDevice(Owner, item, *ChDisk);
 					RetCode = SelPos;
 				},
 				[](plugin_item const&){}}, *MenuItem);

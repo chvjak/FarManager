@@ -64,7 +64,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "filetype.hpp"
 #include "shortcuts.hpp"
 #include "plist.hpp"
-#include "hotplug.hpp"
 #include "setcolor.hpp"
 #include "lang.hpp"
 #include "language.hpp"
@@ -3237,9 +3236,6 @@ void Options::ShellOptions(bool LastCommand, const MOUSE_EVENT_RECORD *MouseEven
 				break;
 			case MENU_COMMANDS_PROCESSLIST: // Task list
 				ShowProcessList();
-				break;
-			case MENU_COMMANDS_HOTPLUGLIST: // HotPlug list
-				ShowHotplugDevices();
 				break;
 			}
 

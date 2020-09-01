@@ -147,8 +147,6 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <winioctl.h>
 #include <mmsystem.h>
 #include <wininet.h>
-#include <winspool.h>
-#include <setupapi.h>
 #include <aclapi.h>
 #include <sddl.h>
 #include <dbt.h>
