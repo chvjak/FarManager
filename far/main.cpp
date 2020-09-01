@@ -376,7 +376,7 @@ static void InitProfile(string &strProfilePath, string &strLocalProfilePath)
 		}
 		else
 		{
-			const auto strUserProfileDir = GetFarIniString(L"General"sv, L"UserProfileDir"sv, path::join(L"%FARHOME%"sv, L"Profile"sv));
+			const auto strUserProfileDir = GetFarIniString(L"General"sv, L"UserProfileDir"sv, L"Profile"sv);
 			const auto strUserLocalProfileDir = GetFarIniString(L"General"sv, L"UserLocalProfileDir"sv, strUserProfileDir);
 			Global->Opt->ProfilePath = ConvertNameToFull(unquote(os::env::expand(strUserProfileDir)));
 			Global->Opt->LocalProfilePath = ConvertNameToFull(unquote(os::env::expand(strUserLocalProfileDir)));
